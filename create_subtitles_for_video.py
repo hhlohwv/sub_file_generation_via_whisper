@@ -2,6 +2,7 @@
 Take in a user generated list of timestamp ranges and sequentially extract the audio between those ranges and transcribe the spoken language.
 Once a transcription is generated for all timestamp ranges, combine them into a single .srt subtitle file for output.
 """
+import os
 from srt import Subtitle, compose
 import whisper
 from moviepy import VideoFileClip
@@ -77,3 +78,7 @@ with open(f"output_sub_file/{video_file_name}_jp_subs.srt", 'w', encoding="utf-8
 print("Writing EN subs file...")
 with open(f"output_sub_file/{video_file_name}_en_subs.srt", 'w', encoding="utf-8") as f:
     f.write(en_srt)
+
+# clear all video clips saved in temp
+for file in os.listdir('temp'):
+    os.remove(f'temp/{file}')
