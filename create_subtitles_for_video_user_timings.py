@@ -97,6 +97,6 @@ except:
     with open(f"{video_file_name}_en_subs.srt", 'w', encoding="utf-8") as f:
         f.write(en_srt)
 
-# clear all video clips saved in temp
+# clear all files saved in temp
 for file in os.listdir('temp'):
     os.remove(f'temp/{file}')
