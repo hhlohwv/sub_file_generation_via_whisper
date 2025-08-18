@@ -37,12 +37,13 @@ print("Finished loading in user sub file...\n")
 # Setup for whisper usage
 print("Loading whisper model...")
 model = whisper.load_model("medium")
-print("Finished loading whisper model...")
+print("Finished loading whisper model...\n")
 
 jp_subs = []
 en_subs = []
 
 for i, sub_time in enumerate(sub_lines):
+    print(f"===== Working on segment {i+1}/{len(sub_lines)} =====\n")
     times = sub_time.rstrip().split('\t')
     start_time = times[0]
     end_time = times[1]
