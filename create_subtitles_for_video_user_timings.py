@@ -55,16 +55,16 @@ for i, sub_time in enumerate(sub_lines):
     end = timedelta(seconds=end_sec)
 
     video_clip = full_video_clip.subclipped(start_time, end_time)
-    saved_clip = video_clip.write_videofile(f'temp/test_{i}.mp4')
+    clip_name = f'temp/clip_{i}.mp4'
+    saved_clip = video_clip.write_videofile(clip_name)
 
-    print("Beginning audio transcription...")
-    transcribed_text = model.transcribe(f'temp/test_{i}.mp4', language='japanese', task='transcribe')["text"]
+    print("\nBeginning audio transcription...")
+    transcribed_text = model.transcribe(clip_name, language='japanese', task='transcribe')["text"]
     print("Finished audio transcription...")
     print("Beginning audio translation...")
-    translated_text = model.transcribe(f'temp/test_{i}.mp4', language='japanese', task='translate')["text"]
-    print("Finished audio translation...")
+    translated_text = model.transcribe(clip_name, language='japanese', task='translate')["text"]
+    print("Finished audio translation...\n")
     
-    timedelta()
     jp_subs.append(Subtitle(i+1, start=start, end=end, content=transcribed_text))
     en_subs.append(Subtitle(i+1, start=start, end=end, content=translated_text))
 
