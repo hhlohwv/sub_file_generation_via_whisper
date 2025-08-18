@@ -68,17 +68,34 @@ for i, sub_time in enumerate(sub_lines):
     jp_subs.append(Subtitle(i+1, start=start, end=end, content=transcribed_text))
     en_subs.append(Subtitle(i+1, start=start, end=end, content=translated_text))
 
+    # Write temporary files in case there is a crash/fail somewhere along the line
+    temp_jp_subs = compose(jp_subs)
+    with open(f"temp/temp_{video_file_name}_jp_subs.srt", 'w', encoding="utf-8") as f:
+        f.write(temp_jp_subs)
+
+    temp_en_subs = compose(en_subs)
+    with open(f"temp/temp_{video_file_name}_en_subs.srt", 'w', encoding="utf-8") as f:
+        f.write(temp_en_subs)
+
 
 jp_srt = compose(jp_subs)
 en_srt = compose(en_subs)
 
 print("Writing JP subs file...")
-with open(f"output_sub_file/{video_file_name}_jp_subs.srt", 'w', encoding="utf-8") as f:
-    f.write(jp_srt)
+try:
+    with open(f"output/{video_file_name}_jp_subs.srt", 'w', encoding="utf-8") as f:
+        f.write(jp_srt)
+except:
+    with open(f"{video_file_name}_jp_subs.srt", 'w', encoding="utf-8") as f:
+        f.write(jp_srt)
 
 print("Writing EN subs file...")
-with open(f"output_sub_file/{video_file_name}_en_subs.srt", 'w', encoding="utf-8") as f:
-    f.write(en_srt)
+try:
+    with open(f"output/{video_file_name}_en_subs.srt", 'w', encoding="utf-8") as f:
+        f.write(en_srt)
+except:
+    with open(f"{video_file_name}_en_subs.srt", 'w', encoding="utf-8") as f:
+        f.write(en_srt)
 
 # clear all video clips saved in temp
 for file in os.listdir('temp'):
